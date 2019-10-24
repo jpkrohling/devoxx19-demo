@@ -1,4 +1,4 @@
-package io.jaegertracing.rhsummit.account;
+package io.jaegertracing.servicemesh.account;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;

@@ -1,4 +1,4 @@
-package io.jaegertracing.rhsummit.order;
+package io.jaegertracing.servicemesh.order;
 
 import java.util.UUID;
 

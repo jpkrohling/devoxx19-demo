@@ -1,8 +1,9 @@
-package io.jaegertracing.rhsummit.order;
+package io.jaegertracing.servicemesh.inventory;
 
 public class Order {
     private String orderId;
     private Account account;
+
 
     public Order() {
     }
@@ -46,4 +47,5 @@ public class Order {
             "}";
     }
 
+    
 }

@@ -1,9 +1,12 @@
-package io.jaegertracing.rhsummit.order;
+package io.jaegertracing.servicemesh.account;
+
+import java.util.UUID;
 
 public class Account {
-    public String id;
+    private String id;
 
     public Account() {
+        this.id = UUID.randomUUID().toString();
     }
 
     public Account(String id) {
@@ -29,5 +32,5 @@ public class Account {
             " id='" + getId() + "'" +
             "}";
     }
-    
+
 }

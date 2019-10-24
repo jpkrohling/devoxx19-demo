@@ -1,4 +1,4 @@
-package io.jaegertracing.rhsummit.inventory;
+package io.jaegertracing.servicemesh.inventory;
 
 public class Account {
     private String id;

@@ -1,4 +1,4 @@
-package io.jaegertracing.rhsummit.inventory;
+package io.jaegertracing.servicemesh.inventory;
 
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;

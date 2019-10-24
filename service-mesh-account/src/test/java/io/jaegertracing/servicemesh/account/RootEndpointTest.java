@@ -1,4 +1,4 @@
-package io.jaegertracing.rhsummit.account;
+package io.jaegertracing.servicemesh.account;
 
 import org.junit.jupiter.api.Test;
 

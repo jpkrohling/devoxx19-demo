@@ -1,4 +1,4 @@
-package io.jaegertracing.rhsummit.inventory;
+package io.jaegertracing.servicemesh.account;
 
 import io.quarkus.test.junit.SubstrateTest;
 
