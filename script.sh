@@ -8,6 +8,9 @@ for i in install/kubernetes/helm/istio-init/files/crd*yaml; do kubectl apply -f 
 kubectl apply -f install/kubernetes/istio-demo.yaml
 kubectl label namespace default istio-injection=enabled
 
+## wait until all istio services are stable
+watch -n 0.5 kubectl get pods -n istio-system
+
 ## add the jaeger-collector headless service, for gRPC load balancing
 kubectl apply -f - <<EOF
 apiVersion: v1
