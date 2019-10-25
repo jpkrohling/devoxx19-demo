@@ -36,9 +36,9 @@ EOF
 BASE_DIR="/home/jpkroehling/Documents/Work/Red Hat/Devoxx 2019"
 CONTAINER_PREFIX="quay.io/jpkroehling/devoxx"
 
-version=$(date +%F_%H%M%S --utc)
 for app in order account inventory
 do
+version=$(date +%F_%H%M%S --utc)
 app_name="service-mesh-${app}"
 image="${CONTAINER_PREFIX}-${app}:${version}"
 
@@ -94,7 +94,24 @@ spec:
             fieldRef:
               fieldPath: metadata.namespace
 EOF
-kubectl expose deployment ${app_name}
+
+kubectl apply -f - <<EOF
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: ${app_name}
+  name: ${app_name}
+spec:
+  ports:
+  - name: http
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: ${app_name}
+  type: ClusterIP
+EOF
 done
 
 ### gateway ###
