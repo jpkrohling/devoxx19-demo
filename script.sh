@@ -1,9 +1,13 @@
+ISTIO_EXTRACTED_AT="/mnt/storage/jpkroehling/Tools/istio/istio-1.3.3"
+BASE_DIR="/home/jpkroehling/Documents/Work/Red Hat/Devoxx 2019"
+CONTAINER_PREFIX="quay.io/jpkroehling/devoxx"
+
 # setup
 ## provision a Kubernetes cluster with minikube
 minikube start --vm-driver kvm2 --cpus 6 --memory 12288
 
 ## install istio
-cd /mnt/storage/jpkroehling/Tools/istio/istio-1.3.3
+cd ${ISTIO_EXTRACTED_AT}
 for i in install/kubernetes/helm/istio-init/files/crd*yaml; do kubectl apply -f $i; done
 kubectl apply -f install/kubernetes/istio-demo.yaml
 kubectl label namespace default istio-injection=enabled
@@ -33,9 +37,6 @@ spec:
 EOF
 
 # applications
-BASE_DIR="/home/jpkroehling/Documents/Work/Red Hat/Devoxx 2019"
-CONTAINER_PREFIX="quay.io/jpkroehling/devoxx"
-
 for app in order account inventory
 do
 version=$(date +%F_%H%M%S --utc)
