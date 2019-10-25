@@ -16,6 +16,7 @@ kubectl label namespace default istio-injection=enabled
 watch -n 0.5 kubectl get pods -n istio-system
 
 ## add the jaeger-collector headless service, for gRPC load balancing
+# https://github.com/istio/istio/pull/18278
 kubectl apply -f - <<EOF
 apiVersion: v1
 kind: Service
