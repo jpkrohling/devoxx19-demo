@@ -1,22 +1,19 @@
-ISTIO_EXTRACTED_AT="/mnt/storage/jpkroehling/Tools/istio/istio-1.3.3"
+ISTIO_EXTRACTED_AT="/mnt/storage/jpkroehling/Tools/istio/istio-1.7.0"
 BASE_DIR="/home/jpkroehling/Documents/Work/Red Hat/Devoxx 2019"
 CONTAINER_PREFIX="quay.io/jpkroehling/devoxx"
 
 # setup
 ## provision a Kubernetes cluster with minikube
-minikube start --vm-driver kvm2 --cpus 6 --memory 12288
+minikube start --vm-driver kvm2 --cpus 6 --memory 20480 --container-runtime=crio --addons=ingress
 
 ## install istio
-cd ${ISTIO_EXTRACTED_AT}
-for i in install/kubernetes/helm/istio-init/files/crd*yaml; do kubectl apply -f $i; done
-kubectl apply -f install/kubernetes/istio-demo.yaml
+istioctl install --set profile=demo
 kubectl label namespace default istio-injection=enabled
 
 ## wait until all istio services are stable
 watch -n 0.5 kubectl get pods -n istio-system
 
 ## add the jaeger-collector headless service, for gRPC load balancing
-# https://github.com/istio/istio/pull/18278
 kubectl apply -f - <<EOF
 apiVersion: v1
 kind: Service
@@ -49,7 +46,7 @@ cd "${BASE_DIR}/${app_name}/"
 docker build -f src/main/docker/Dockerfile.jvm -t "${image}" .
 docker push "${image}"
 kubectl apply -f - <<EOF
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ${app_name}
@@ -59,6 +56,9 @@ metadata:
     app: ${app_name}
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      app: ${app_name}
   template:
     metadata:
       labels:
